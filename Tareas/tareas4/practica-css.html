@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS · Ejercicio & Tarea — Ingeniería Web I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Variables ───────────────────────────── */
+    :root {
+      --cream:      #faf8f3;
+      --cream-dark: #f0ebe0;
+      --ink:        #1a1a18;
+      --ink-soft:   #4a4a46;
+      --ink-muted:  #8a8a82;
+      --green:      #2e7d32;
+      --green-light:#e8f5e9;
+      --green-mid:  #a5d6a7;
+      --amber:      #b45309;
+      --amber-light:#fef3c7;
+      --red:        #b91c1c;
+      --red-light:  #fee2e2;
+      --border:     #ddd8cc;
+      --serif:      'DM Serif Display', Georgia, serif;
+      --sans:       'DM Sans', system-ui, sans-serif;
+      --mono:       'JetBrains Mono', 'Courier New', monospace;
+      --radius:     8px;
+    }
+
+    /* ── Reset ───────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── Layout ──────────────────────────────── */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    /* ── Top bar ─────────────────────────────── */
+    .top-bar {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 0.55rem 2rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .top-bar span { opacity: 0.5; }
+    .top-bar strong { color: var(--green-mid); opacity: 1; }
+
+    /* ── Doc header ──────────────────────────── */
+    .doc-header {
+      padding: 3.5rem 0 2.5rem;
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: 3rem;
+    }
+    .doc-header .kicker {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.75rem;
+    }
+    .doc-header h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 2.9rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .doc-header .subtitle {
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+      max-width: 60ch;
+      line-height: 1.6;
+    }
+    .doc-meta {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+    .doc-meta span { display: flex; align-items: center; gap: 0.35rem; }
+
+    /* ── Section titles ──────────────────────── */
+    .section-title {
+      font-family: var(--serif);
+      font-size: 1.65rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+    .section-subtitle {
+      color: var(--ink-muted);
+      font-size: 0.88rem;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ── Divider ─────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1.5px solid var(--border);
+      margin: 3.5rem 0;
+    }
+
+    /* ── Card ────────────────────────────────── */
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.25rem;
+    }
+    .card + .card { margin-top: 0; }
+
+    /* ── Badges ──────────────────────────────── */
+    .badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      vertical-align: middle;
+    }
+    .badge-green  { background: var(--green-light);  color: var(--green); }
+    .badge-amber  { background: var(--amber-light);  color: var(--amber); }
+    .badge-red    { background: var(--red-light);    color: var(--red);   }
+    .badge-gray   { background: var(--cream-dark);   color: var(--ink-soft); }
+
+    /* ── Step list ───────────────────────────── */
+    .step-list { list-style: none; counter-reset: steps; }
+    .step-list li {
+      counter-increment: steps;
+      display: grid;
+      grid-template-columns: 2.2rem 1fr;
+      gap: 0 1rem;
+      margin-bottom: 1.25rem;
+      align-items: start;
+    }
+    .step-list li::before {
+      content: counter(steps);
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: #fff;
+      background: var(--green);
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+    .step-list li .step-content strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+    .step-list li .step-content p,
+    .step-list li .step-content ul { font-size: 0.93rem; color: var(--ink-soft); }
+    .step-list li .step-content ul {
+      margin-top: 0.4rem;
+      padding-left: 1.1rem;
+    }
+    .step-list li .step-content ul li {
+      display: list-item;
+      margin-bottom: 0.25rem;
+    }
+    .step-list li .step-content ul li::before { display: none; }
+
+    /* ── Rubric table ────────────────────────── */
+    .rubric-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .rubric-table thead th {
+      background: var(--ink);
+      color: var(--cream);
+      text-align: left;
+      padding: 0.6rem 1rem;
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+    .rubric-table tbody tr { border-bottom: 1px solid var(--border); }
+    .rubric-table tbody tr:last-child { border-bottom: none; }
+    .rubric-table td { padding: 0.75rem 1rem; vertical-align: top; }
+    .rubric-table td:first-child { font-weight: 500; }
+    .rubric-table td:last-child  {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--green);
+      white-space: nowrap;
+      text-align: right;
+      font-weight: 500;
+    }
+    .rubric-table tfoot td {
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      background: var(--green-light);
+      color: var(--green);
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      text-align: right;
+    }
+    .rubric-table tfoot td:first-child {
+      color: var(--ink);
+      font-family: var(--sans);
+      text-align: left;
+    }
+
+    /* ── Code inline ─────────────────────────── */
+    code {
+      font-family: var(--mono);
+      font-size: 0.82em;
+      background: var(--cream-dark);
+      border: 1px solid var(--border);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      color: var(--green);
+    }
+
+    /* ── Pre block ───────────────────────────── */
+    pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 1.7;
+      margin: 1rem 0;
+    }
+    pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+    .kw  { color: #569cd6; }
+    .pr  { color: #9cdcfe; }
+    .vl  { color: #ce9178; }
+    .cm  { color: #6a9955; font-style: italic; }
+    .sl  { color: #c586c0; }
+
+    /* ── Callout ─────────────────────────────── */
+    .callout {
+      display: flex;
+      gap: 0.9rem;
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius);
+      margin: 1.25rem 0;
+      font-size: 0.9rem;
+    }
+    .callout-icon { font-size: 1.1rem; flex-shrink: 0; line-height: 1.5; }
+    .callout-info    { background: var(--green-light);  border-left: 3px solid var(--green); }
+    .callout-warning { background: var(--amber-light);  border-left: 3px solid var(--amber); }
+    .callout-tip     { background: #eff6ff;             border-left: 3px solid #3b82f6; }
+
+    /* ── Entregable box ──────────────────────── */
+    .deliverable-box {
+      background: var(--ink);
+      color: var(--cream);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin-top: 1.5rem;
+    }
+    .deliverable-box h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+      color: var(--green-mid);
+    }
+    .deliverable-box ul {
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      opacity: 0.85;
+    }
+
+    /* ── Property grid ───────────────────────── */
+    .prop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+    .prop-chip {
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      background: var(--cream-dark);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.35rem 0.7rem;
+      color: var(--green);
+    }
+
+    /* ── Two col ─────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Accent section ──────────────────────── */
+    .accent-section {
+      background: var(--green-light);
+      border: 1px solid var(--green-mid);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.25rem;
+    }
+    .accent-section h3 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+      color: var(--green);
+    }
+
+    /* ── File tree ───────────────────────────── */
+    .file-tree {
+      font-family: var(--mono);
+      font-size: 0.83rem;
+      line-height: 2;
+      color: var(--ink-soft);
+    }
+    .file-tree .dir  { color: var(--ink); font-weight: 500; }
+    .file-tree .file { color: var(--green); }
+    .file-tree .new  { color: var(--amber); }
+
+    /* ── Footer ──────────────────────────────── */
+    .doc-footer {
+      margin-top: 5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <span>Ingeniería Web I</span>
+    <strong>Unidad 3 — CSS Fundamentos</strong>
+  </div>
+
+  <div class="page">
+
+    <header class="doc-header">
+      <p class="kicker">Ejercicio + Tarea</p>
+      <h1>Estilizando un artículo de blog con CSS</h1>
+      <p class="subtitle">
+        Los estudiantes reciben el HTML de un artículo ya estructurado y deben
+        aplicar CSS.
+      </p>
+      <div class="doc-meta">
+        <span>⏱ Ejercicio: ~45 min</span>
+      </div>
+    </header>
+
+
+    <h2 class="section-title">Contexto de la actividad</h2>
+    <p class="section-subtitle">¿Qué aprenderán?</p>
+
+    <div class="card">
+      <p>
+        En esta actividad, el HTML ya está listo: el estudiante debe <strong>leer,
+          comprender y aplicar estilos</strong> a un
+        documento existente sin modificar su estructura.
+      </p>
+      <div class="callout callout-info" style="margin-top:1rem">
+        <span class="callout-icon">💡</span>
+        <div>
+          El archivo <code>blog-articulo.html</code> contiene el artículo completo.
+          <strong>No se permite modificar el HTML</strong>, excepto para enlazar
+          el archivo <code>estilos.css</code> dentro del <code>&lt;head&gt;</code>.
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem">
+      <strong style="display:block;margin-bottom:0.5rem">Estructura de archivos esperada</strong>
+      <div class="file-tree">
+        <div><span class="dir">semana-05/</span></div>
+        <div>&nbsp;&nbsp;├── <span class="file">blog-articulo.html</span> &nbsp;← proporcionado</div>
+        <div>&nbsp;&nbsp;└── <span class="new">estilos.css</span> &nbsp;← el estudiante lo crea</div>
+      </div>
+    </div>
+
+
+    <hr class="divider" />
+
+
+    <h2 class="section-title">
+      Ejercicio en clase
+      <span class="badge badge-green" style="margin-left:0.5rem">En aula · ~45 min</span>
+    </h2>
+    <p class="section-subtitle">Traducir los requerimientos visuales a propiedades CSS.</p>
+
+    <div class="callout callout-warning">
+      <span class="callout-icon">📌</span>
+      <div>
+        Este ejercicio es <strong>guiado</strong>. El docente explica las propiedades requeridas y tú debes escribir el código correspondiente. Elige una de las tres paletas propuestas a continuación y utiliza los colores indicados en las instrucciones.
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;margin-bottom:0.5rem">
+      <strong style="font-size:0.95rem">Elige una paleta de color para el ejercicio</strong>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem">
+
+      <div class="card" style="padding:1.25rem;border-top:4px solid #1e3a2f">
+        <div style="display:flex;gap:6px;margin-bottom:0.9rem">
+          <span style="width:28px;height:28px;border-radius:50%;background:#fdf6ec;border:1px solid #ddd;flex-shrink:0" title="#fdf6ec"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#2c2c2c;flex-shrink:0" title="#2c2c2c"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#1e3a2f;flex-shrink:0" title="#1e3a2f"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#1a6b3c;flex-shrink:0" title="#1a6b3c"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#edf7f1;border:1px solid #ddd;flex-shrink:0" title="#edf7f1"></span>
+        </div>
+        <strong style="display:block;font-size:0.88rem">A — Verde editorial</strong>
+        <div style="font-family:var(--mono);font-size:0.72rem;color:var(--ink-soft);line-height:2;margin-top:0.4rem">
+          <div>fondo: <span style="color:var(--green)">#fdf6ec</span></div>
+          <div>texto: <span style="color:var(--green)">#2c2c2c</span></div>
+          <div>header: <span style="color:var(--green)">#1e3a2f</span></div>
+          <div>acento: <span style="color:var(--green)">#1a6b3c</span></div>
+          <div>acento suave: <span style="color:var(--green)">#edf7f1</span></div>
+          <div>texto claro: <span style="color:var(--green)">#ffffff</span></div>
+          <div>texto atenuado: <span style="color:var(--green)">#777777</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:1.25rem;border-top:4px solid #1e3a5f">
+        <div style="display:flex;gap:6px;margin-bottom:0.9rem">
+          <span style="width:28px;height:28px;border-radius:50%;background:#f5f7fa;border:1px solid #ddd;flex-shrink:0" title="#f5f7fa"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#1e293b;flex-shrink:0" title="#1e293b"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#1e3a5f;flex-shrink:0" title="#1e3a5f"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#1d4ed8;flex-shrink:0" title="#1d4ed8"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#dbeafe;border:1px solid #ddd;flex-shrink:0" title="#dbeafe"></span>
+        </div>
+        <strong style="display:block;font-size:0.88rem">B — Azul académico</strong>
+        <div style="font-family:var(--mono);font-size:0.72rem;color:var(--ink-soft);line-height:2;margin-top:0.4rem">
+          <div>fondo: <span style="color:var(--green)">#f5f7fa</span></div>
+          <div>texto: <span style="color:var(--green)">#1e293b</span></div>
+          <div>header: <span style="color:var(--green)">#1e3a5f</span></div>
+          <div>acento: <span style="color:var(--green)">#1d4ed8</span></div>
+          <div>acento suave: <span style="color:var(--green)">#dbeafe</span></div>
+          <div>texto claro: <span style="color:var(--green)">#ffffff</span></div>
+          <div>texto atenuado: <span style="color:var(--green)">#64748b</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:1.25rem;border-top:4px solid #7c3aed">
+        <div style="display:flex;gap:6px;margin-bottom:0.9rem">
+          <span style="width:28px;height:28px;border-radius:50%;background:#faf5ff;border:1px solid #ddd;flex-shrink:0" title="#faf5ff"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#1e1b2e;flex-shrink:0" title="#1e1b2e"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#2d1b69;flex-shrink:0" title="#2d1b69"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#7c3aed;flex-shrink:0" title="#7c3aed"></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#ede9fe;border:1px solid #ddd;flex-shrink:0" title="#ede9fe"></span>
+        </div>
+        <strong style="display:block;font-size:0.88rem">C — Violeta moderno</strong>
+        <div style="font-family:var(--mono);font-size:0.72rem;color:var(--ink-soft);line-height:2;margin-top:0.4rem">
+          <div>fondo: <span style="color:var(--green)">#faf5ff</span></div>
+          <div>texto: <span style="color:var(--green)">#1e1b2e</span></div>
+          <div>header: <span style="color:var(--green)">#2d1b69</span></div>
+          <div>acento: <span style="color:var(--green)">#7c3aed</span></div>
+          <div>acento suave: <span style="color:var(--green)">#ede9fe</span></div>
+          <div>texto claro: <span style="color:var(--green)">#ffffff</span></div>
+          <div>texto atenuado: <span style="color:var(--green)">#6b7280</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <ol class="step-list">
+
+      <li>
+        <div class="step-content">
+          <strong>Crear y enlazar el archivo CSS</strong>
+          <p>En la misma carpeta donde tienes el HTML, crea un archivo llamado <code>estilos.css</code>. Luego, ve al <code>&lt;head&gt;</code> de tu archivo HTML y descomenta la etiqueta <code>&lt;link&gt;</code> para asociar tu hoja de estilos.</p>
+        </div>
+      </li>
+
+      <li>
+        <div class="step-content">
+          <strong>Importar fuentes y configurar el <code>body</code></strong>
+          <p>Copia el siguiente código en la primera línea de tu <code>estilos.css</code> para importar las tipografías necesarias:</p>
+          <pre><code><span class="kw">@import</span> <span class="vl">url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap')</span>;</code></pre>
+          <p>Selecciona la etiqueta <code>body</code>. Asígnale la fuente principal 'Lato' (con <code>sans-serif</code> como respaldo). Define el tamaño de fuente a <code>16px</code> y la altura de línea a <code>1.7</code>. Aplica el color "texto" de tu paleta al texto, y el color "fondo" al background. Por último, quítale todo el margen exterior por defecto (0).</p>
+        </div>
+      </li>
+
+      <li>
+        <div class="step-content">
+          <strong>Estilizar el encabezado del sitio</strong>
+          <p>Selecciona el contenedor con el id <code>site-header</code>. Asígnale el color "header" de tu paleta como fondo. Dale un relleno (padding) de <code>16px</code> arriba y abajo, y <code>32px</code> a los lados. Usa Flexbox para alinear sus elementos hijos: distribuye el espacio máximo entre ellos y céntralos verticalmente.</p>
+          <p>Para el logo (id <code>site-logo</code>): quítale el subrayado, usa el color "texto claro", dale un tamaño de <code>1.4rem</code> y ponlo en negrita.</p>
+          <p>Para el menú de navegación (la lista <code>ul</code> dentro del <code>nav</code> del header): quítale las viñetas por defecto, quita los márgenes y rellenos. Conviértelo en un contenedor flex para que los ítems se coloquen en fila y dale un espacio (gap) de <code>24px</code> entre ellos.</p>
+          <p>A los enlaces dentro de esa lista: dales el color "acento suave", quítales el subrayado y pon el tamaño de fuente en <code>0.95rem</code>.</p>
+        </div>
+      </li>
+
+      <li>
+        <div class="step-content">
+          <strong>Centrar y limitar el ancho del contenido principal</strong>
+          <p>Selecciona la etiqueta <code>main</code>. Limita su ancho máximo a <code>760px</code>. Céntralo en la pantalla usando márgenes automáticos a los lados (y <code>0</code> arriba/abajo). Finalmente, ponle un relleno interno de <code>40px</code> arriba/abajo y <code>24px</code> a los lados.</p>
+        </div>
+      </li>
+
+      <li>
+        <div class="step-content">
+          <strong>Jerarquía tipográfica: Títulos</strong>
+          <p>Agrupa los selectores <code>h1</code>, <code>h2</code> y <code>h3</code> para aplicar estilos compartidos: usa la fuente 'Playfair Display' (con <code>serif</code> de respaldo), aplícales el color "header" de tu paleta y establece una altura de línea de <code>1.25</code>.</p>
+          <p>Luego, dales estilos específicos a cada nivel:</p>
+          <ul>
+            <li>Al <code>h1</code>: tamaño de <code>2.2rem</code> y margen inferior de <code>16px</code>.</li>
+            <li>Al <code>h2</code>: tamaño de <code>1.5rem</code>, margen superior de <code>40px</code> y margen inferior de <code>12px</code>.</li>
+            <li>Al <code>h3</code>: tamaño de <code>1.15rem</code>, margen superior de <code>28px</code> y margen inferior de <code>8px</code>.</li>
+          </ul>
+        </div>
+      </li>
+
+      <li>
+        <div class="step-content">
+          <strong>Tratamiento de la imagen de portada</strong>
+          <p>A la clase <code>.article-cover</code>, dale un margen exterior de <code>32px</code> arriba y abajo (y <code>0</code> a los lados).</p>
+          <p>Selecciona la imagen que está dentro de <code>.article-cover</code>: haz que ocupe el <code>100%</code> de su contenedor de ancho, que la altura se calcule automáticamente y aplícale un radio de borde de <code>8px</code>.</p>
+          <p>Para la descripción de la imagen (la etiqueta <code>figcaption</code>): dale un tamaño de <code>0.85rem</code>, usa el color "texto atenuado", alinea el texto al centro, añádele un margen superior de <code>8px</code> y cambia el estilo de la fuente a cursiva.</p>
+        </div>
+      </li>
+
+      <li>
+        <div class="step-content">
+          <strong>Destacar la cita (Blockquote)</strong>
+          <p>A la etiqueta <code>blockquote</code> ponle el color "acento suave" de fondo y aplícale un borde izquierdo sólido de <code>4px</code> usando tu color "acento". Dale un relleno de <code>20px</code> arriba/abajo y <code>24px</code> a los lados. Sepáralo del resto del contenido con un margen de <code>32px</code> arriba y abajo. Redondea sus bordes a <code>8px</code>, pero ojo: solo los bordes derechos (superior e inferior).</p>
+          <p>Al párrafo que está dentro del blockquote: ponlo en cursiva, tamaño <code>1.1rem</code> y un margen inferior de <code>8px</code>.</p>
+          <p>A la referencia de la cita (la etiqueta <code>cite</code>): tamaño de <code>0.85rem</code>, aplícale el color "acento", fórza el estilo de fuente a normal (para quitarle la cursiva heredada) y ponlo en negrita.</p>
+        </div>
+      </li>
+
+      <li>
+        <div class="step-content">
+          <strong>Formato del código (Pre y Code)</strong>
+          <p>Para el bloque <code>pre</code>: usa un color de fondo oscuro (como <code>#1e1e1e</code>) y un color de texto claro (como <code>#d4d4d4</code>). Dale un relleno de <code>24px</code> en todas direcciones y un redondeo de bordes de <code>8px</code>. Muy importante: asegúrate de manejar el desbordamiento añadiendo scroll horizontal automático. Usa una familia tipográfica monoespaciada ('Courier New', monospace), tamaño <code>0.88rem</code>, altura de línea <code>1.7</code> y un margen exterior de <code>24px</code> arriba/abajo.</p>
+          <p>Para la etiqueta <code>code</code> que está en línea (dentro de los párrafos): usa también la fuente monoespaciada, tamaño de <code>0.88em</code>. Ponle de fondo el color "acento suave" y texto del color "acento". Dale un relleno de <code>2px</code> arriba/abajo y <code>6px</code> a los lados, con un redondeo de <code>4px</code>.</p>
+          <p><strong>Cuidado con la herencia:</strong> El <code>code</code> que está dentro del <code>pre</code> no debe verse como el inline. Selecciona específicamente el <code>code</code> dentro del <code>pre</code> y resetea su fondo (transparente), su color (heredado), su tamaño (heredado) y quítale el relleno (0).</p>
+        </div>
+      </li>
+
+      <li>
+        <div class="step-content">
+          <strong>Listas del artículo y Etiquetas (Tags)</strong>
+          <p>A las listas (<code>ul</code> y <code>ol</code>) que estén directamente dentro del contenedor con clase <code>.article-body</code>: dales un relleno izquierdo de <code>24px</code> y un margen exterior de <code>16px</code> arriba y abajo. Al <code>li</code> que está dentro de ellas, ponle un margen inferior de <code>8px</code>.</p>
+          <p>A la lista con clase <code>.tags</code>: quítale las viñetas, pon su relleno en cero y dale un margen de <code>16px 0 0</code>. Usa Flexbox para que los elementos fluyan en fila pero permitan saltos de línea, con un espacio (gap) de <code>8px</code>.</p>
+          <p>A la clase <code>.tag</code> (cada píldora individual): haz que su comportamiento de display sea <code>inline-block</code>. Usa el color "acento suave" de fondo y el color "acento" para el texto. Añádele un borde sólido de <code>1px</code> (puedes usar un color derivado u oscurecer un poco el acento suave). Dale un relleno de <code>4px</code> arriba/abajo y <code>14px</code> a los lados. Redondea totalmente sus bordes (usa un valor grande como <code>100px</code>), define el texto en <code>0.82rem</code> y con peso de <code>600</code>.</p>
+        </div>
+      </li>
+
+      <li>
+        <div class="step-content">
+          <strong>El pie de página (Footer)</strong>
+          <p>Selecciona el id <code>site-footer</code>. Aplícale el mismo color "header" de fondo que usaste arriba y utiliza el color "acento suave" (o "texto claro") para el texto. Centra el texto, ponle un relleno interno de <code>24px</code> en todos los lados, ajusta el tamaño a <code>0.85rem</code> y sepáralo del artículo dándole un margen superior de <code>64px</code>.</p>
+        </div>
+      </li>
+
+    </ol>
+
+    <div class="card" style="margin-top:1.5rem">
+      <strong style="display:block;margin-bottom:0.6rem">Propiedades CSS cubiertas en el ejercicio</strong>
+      <div class="prop-grid">
+        <span class="prop-chip">color</span>
+        <span class="prop-chip">background-color</span>
+        <span class="prop-chip">font-family</span>
+        <span class="prop-chip">font-size</span>
+        <span class="prop-chip">font-weight</span>
+        <span class="prop-chip">font-style</span>
+        <span class="prop-chip">line-height</span>
+        <span class="prop-chip">text-align</span>
+        <span class="prop-chip">text-decoration</span>
+        <span class="prop-chip">margin</span>
+        <span class="prop-chip">padding</span>
+        <span class="prop-chip">border</span>
+        <span class="prop-chip">border-left</span>
+        <span class="prop-chip">border-radius</span>
+        <span class="prop-chip">max-width</span>
+        <span class="prop-chip">width</span>
+        <span class="prop-chip">height</span>
+        <span class="prop-chip">display</span>
+        <span class="prop-chip">justify-content</span>
+        <span class="prop-chip">align-items</span>
+        <span class="prop-chip">gap</span>
+        <span class="prop-chip">flex-wrap</span>
+        <span class="prop-chip">list-style</span>
+        <span class="prop-chip">overflow-x</span>
+      </div>
+    </div>
+
+    <footer class="doc-footer">
+      <span>Ingeniería Web I · Unidad 3 — CSS Fundamentos</span>
+    </footer>
+
+  </div>
+</body>
+</html>

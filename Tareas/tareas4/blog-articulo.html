@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El modelo de cajas en CSS — DevBlog</title>
+  <!-- TODO: Enlaza tu archivo de estilos aquí -->
+  <link rel="stylesheet" href="estilo.css" />
+</head>
+<body>
+
+  <!-- =====================================================
+       ENCABEZADO DEL SITIO
+       Contiene el logo y la navegación principal.
+       El <nav> usa <ul> + <li> para que los lectores
+       de pantalla anuncien cuántos ítems hay en el menú.
+  ====================================================== -->
+  <header id="site-header">
+
+    <a href="#" id="site-logo">DevBlog</a>
+
+    <nav aria-label="Navegación principal">
+      <ul>
+        <li><a href="#" aria-current="page">Inicio</a></li>
+        <li><a href="#">Artículos</a></li>
+        <li><a href="#">Sobre mí</a></li>
+      </ul>
+    </nav>
+
+  </header>
+
+  <!-- =====================================================
+       CONTENIDO PRINCIPAL
+       <main> es el landmark que identifica el área central.
+       Solo debe aparecer una vez por página.
+  ====================================================== -->
+  <main id="main-content">
+
+    <article aria-labelledby="article-title">
+
+      <!-- Cabecera del artículo -->
+      <header class="article-header">
+        <span class="category">CSS Fundamentos</span>
+        <h1 id="article-title">El modelo de cajas: la base de todo diseño web</h1>
+        <div class="article-meta">
+          <span class="author">Por <strong>Ana Flores</strong></span>
+          <span class="separator" aria-hidden="true">·</span>
+          <time datetime="2025-05-10">10 de mayo, 2025</time>
+          <span class="separator" aria-hidden="true">·</span>
+          <span class="reading-time">5 min de lectura</span>
+        </div>
+      </header>
+
+      <!-- Imagen de portada -->
+      <figure class="article-cover">
+        <img
+          src="https://placehold.co/900x400/e8f5e9/2e7d32?text=Box+Model"
+          alt="Diagrama del modelo de cajas en CSS mostrando las capas: content, padding, border y margin"
+          width="900"
+          height="400"
+        />
+        <figcaption>
+          Visualización del modelo de cajas: <em>content</em>, <em>padding</em>,
+          <em>border</em> y <em>margin</em>.
+        </figcaption>
+      </figure>
+
+      <!-- Cuerpo del artículo -->
+      <section class="article-body" aria-label="Cuerpo del artículo">
+
+        <p class="lead">
+          Antes de escribir una sola línea de CSS, todo desarrollador web necesita entender
+          un concepto fundamental: <strong>el modelo de cajas</strong>. Este modelo define
+          cómo se calcula el tamaño y el espacio de cada elemento en una página web.
+        </p>
+
+        <h2>¿Qué es el modelo de cajas?</h2>
+
+        <p>
+          En CSS, cada elemento HTML se representa como una caja rectangular. Esa caja está
+          compuesta por cuatro áreas concéntricas que, de adentro hacia afuera, son:
+        </p>
+
+        <ul>
+          <li><strong>Content</strong> — el área donde vive el texto o la imagen.</li>
+          <li><strong>Padding</strong> — espacio interior entre el contenido y el borde.</li>
+          <li><strong>Border</strong> — el borde que rodea el padding.</li>
+          <li><strong>Margin</strong> — espacio exterior entre el borde y los demás elementos.</li>
+        </ul>
+
+        <h2>El problema con <code>box-sizing</code></h2>
+
+        <p>
+          Por defecto, cuando defines <code>width: 300px</code> en un elemento, ese valor
+          corresponde únicamente al área de contenido. El padding y el border se
+          <em>suman</em> al total, lo que hace que el elemento ocupe más espacio del esperado.
+        </p>
+
+        <blockquote>
+          <p>
+            "Si no controlas el modelo de cajas, el modelo de cajas te controlará a ti."
+          </p>
+          <cite>— Regla no oficial del CSS</cite>
+        </blockquote>
+
+        <p>
+          La solución es aplicar <code>box-sizing: border-box</code> globalmente. Con esta
+          propiedad, el <code>width</code> incluye el padding y el border, haciendo los
+          cálculos de diseño mucho más predecibles.
+        </p>
+
+        <h3>Ejemplo práctico</h3>
+
+        <pre><code>/* Buena práctica: resetear el modelo de cajas */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.tarjeta {
+  width: 300px;
+  padding: 24px;
+  border: 2px solid #ccc;
+  /* Con border-box: la tarjeta mide 300px en total */
+}</code></pre>
+
+        <h2>Márgenes y colapso</h2>
+
+        <p>
+          Otro comportamiento que confunde a muchos principiantes es el <em>colapso de
+          márgenes</em>. Cuando dos elementos bloque adyacentes tienen márgenes verticales,
+          estos no se suman: el mayor de los dos "gana" y el menor desaparece.
+        </p>
+
+        <h3>¿Cuándo ocurre el colapso?</h3>
+
+        <ol>
+          <li>Entre elementos hermanos con márgenes verticales adyacentes.</li>
+          <li>Entre un elemento padre y su primer o último hijo.</li>
+          <li>En elementos vacíos que tienen margen superior e inferior.</li>
+        </ol>
+
+        <p>
+          Para evitar el colapso puedes usar <code>padding</code>, <code>border</code> o
+          convertir el contenedor en un contexto de formato de bloque con
+          <code>overflow: hidden</code> o <code>display: flow-root</code>.
+        </p>
+
+        <h2>Conclusión</h2>
+
+        <p>
+          El modelo de cajas no es solo teoría: cada vez que ajustes un margen, un padding
+          o un border estarás usando este modelo. Dominarlo te ahorrará horas de depuración
+          y te dará una base sólida para entender Flexbox, Grid y cualquier sistema de diseño.
+        </p>
+
+      </section>
+
+      <!-- Pie del artículo: tags y CTA -->
+      <footer class="article-footer">
+        <p>¿Te fue útil este artículo? Compártelo con alguien que esté aprendiendo CSS.</p>
+        <ul class="tags" aria-label="Etiquetas del artículo">
+          <li><span class="tag">CSS</span></li>
+          <li><span class="tag">Fundamentos</span></li>
+          <li><span class="tag">Box Model</span></li>
+          <li><span class="tag">Diseño Web</span></li>
+        </ul>
+      </footer>
+
+    </article>
+
+  </main>
+
+  <!-- =====================================================
+       PIE DEL SITIO
+       <footer> con role implícito "contentinfo".
+  ====================================================== -->
+  <footer id="site-footer">
+    <p>© 2025 DevBlog · Ingeniería Web I</p>
+  </footer>
+
+</body>
+</html>
