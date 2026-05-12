@@ -1,0 +1,101 @@
+main {
+    max-width: 960px;
+    padding: 160px 40px;
+    background-color: #f6f7f8;
+    font-family: 'Lato', sans-serif;
+}
+
+p{
+    color: #637588;
+}
+
+.perfil {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 64px;
+    padding: 3%;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+figure {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    border: 2px solid gray;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.perfil h1+p{
+    font-style: italic;
+}
+
+.biografia {
+    display: flex;
+    flex-direction: column;
+}
+
+ul {
+    color: #637588;
+}
+
+li::marker {
+    color: #137FEC;
+    font-size: 20px;
+}
+
+.colores {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.selector {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 5%;
+}
+
+.muestra {
+    overflow: hidden;
+    margin-top: 32px;
+    height: 150px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 9%;
+    padding-bottom: 100px;
+}
+
+.selector input {
+    padding: 5px;
+    font-size: 12px;
+}
+
+.selector button {
+    padding: 12px;
+    font-size: 12px;
+    background-color: #137FEC;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.color-muestra {
+    width: 200px;
+    height: 100px;
+    margin: 1%;
+    background-color: #137FEC;
+    border-radius: 10px;
+}
+
